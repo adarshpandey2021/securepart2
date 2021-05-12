@@ -1,0 +1,55 @@
+const mongoose=require('mongoose');
+
+const AddVechileSchema=new mongoose.Schema({
+    vechileRegistrationNo:{
+        type:String
+    },
+    vechileType:{
+        type:String
+    },
+    totalSeat:{
+        type:String
+    },
+    vechileInsurancePolicyNo:{
+        type:String
+    },
+    renwableDate:{
+        type:String
+    },
+   fitnessCertiNo:{
+        type:String
+    },
+    fitnessValidFrom:{
+        type:String
+    },
+    fitnessValidTo:{
+        type:String
+    },
+    
+   pollutionCertiNo:{
+        type:String
+    },
+  pollutionValidFrom:{
+        type:String
+    },
+    pollutionValidTo:{
+        type:String
+    },
+    vechileLastServiceDate:{
+        type:String
+    },
+    vechileNextServiceDate:{
+        type:String
+    },
+    upload:[{uploadPolicy:{
+        type:String
+    },
+    uploadRCbook:{
+        type:String
+    },
+    provisionUploadCerti:{
+        type:String
+    },
+    }]
+})
+module.exports=mongoose.model("AddVechileSchema",AddVechileSchema)
