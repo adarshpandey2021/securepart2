@@ -274,6 +274,14 @@ const createEmployeeSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
+    monthlyGross:{
+      type:Number,
+      default:0
+    },
+    isSalaryAssigned:{
+      type:Boolean,
+      default:false
+    },
     salaryPaid: {
       _id: {
         type: String,

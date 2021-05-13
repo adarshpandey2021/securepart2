@@ -5,6 +5,7 @@ const catchAsync = require('../../utils/catchAsync');
 const respond = require('../../utils/respond');
 // const AppError = require('../../utils/appError');
 const nextError = require('../../utils/nextError');
+const Employee = require('../../model/employee/employeeModel');
 
 exports.getAllAssignSalaryStructure = factory.getAll(AssignSalaryStructure);
 exports.deleteAssignSalaryStructure = factory.deleteOne(AssignSalaryStructure);
@@ -24,9 +25,9 @@ exports.createAssignSalaryStructure = catchAsync(async (req, res, next) => {
     role,
     salaryHeads,
     monthEffectiveFrom,
-   bankNameAndBranch,
-     bankAccountNo,
-     IFSCCode,
+    bankNameAndBranch,
+    bankAccountNo,
+    IFSCCode
   } = req.body;
 
   const assignSalaryStructureCheck = await AssignSalaryStructure.findOne({
@@ -52,9 +53,9 @@ exports.createAssignSalaryStructure = catchAsync(async (req, res, next) => {
     role,
     salaryHeads,
     monthEffectiveFrom,
-   bankNameAndBranch,
-     bankAccountNo,
-     IFSCCode,
+    bankNameAndBranch,
+    bankAccountNo,
+    IFSCCode
   });
 
   const createAssignSalaryStructure = await AssignSalaryStructure.findById(
@@ -71,6 +72,23 @@ exports.createAssignSalaryStructure = catchAsync(async (req, res, next) => {
 });
 
 exports.updateAssignSalaryStructure = factory.updateOne(AssignSalaryStructure);
+
+exports.getAllAssignSalaryStructureAndGross = catchAsync(
+  async (req, res, next) => {
+    const allEmployees = await Employee.find({ isSalaryAssigned: true });
+
+    if (!allEmployees)
+      return nextError(next, 'No Employees has any assigned salary', 400);
+
+    respond(
+      res,
+      200,
+      allEmployees,
+      'The assigned salary of the employees',
+      allEmployees.length
+    );
+  }
+);
 
 // exports.updateAssignSalaryStructure = catchAsync(async (req, res, next) => {
 //   const { id } = req.params;
