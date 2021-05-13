@@ -49,9 +49,9 @@ const SalaryStructureSchema = new mongoose.Schema(
     salaryHead: {
       type: String,
       enum: {
-        values: ['Basic', 'HRA', 'DA', 'CCA', 'PF', 'ESIC'],
+        values: ['Basic', 'HRA', 'DA', 'CCA', 'PF', 'ESIC','PF employee contribute'],
         message:
-          'The values of the type should be Basic, HRA, DA, CCA, PF, ESIC'
+          'The values of the type should be Basic, HRA, DA, CCA, PF, ESIC,PF employee contribute'
       }
     },
     annualIncrement: {

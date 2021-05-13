@@ -17,16 +17,16 @@ exports.createAssignSalaryStructure = catchAsync(async (req, res, next) => {
   const {
     employeeId,
     employee,
-    // employeeName,
+    employeeName,
     department,
     departmentId,
     roleId,
     role,
     salaryHeads,
-    monthEffectiveFrom
-    // bankNameAndBranch,
-    // bankAccountNo,
-    // IFSCCode,
+    monthEffectiveFrom,
+   bankNameAndBranch,
+     bankAccountNo,
+     IFSCCode,
   } = req.body;
 
   const assignSalaryStructureCheck = await AssignSalaryStructure.findOne({
@@ -45,12 +45,16 @@ exports.createAssignSalaryStructure = catchAsync(async (req, res, next) => {
   const assignSalaryStructure = await AssignSalaryStructure.create({
     employeeId,
     employee,
+    employeeName,
     department,
-    role,
     departmentId,
     roleId,
+    role,
     salaryHeads,
-    monthEffectiveFrom
+    monthEffectiveFrom,
+   bankNameAndBranch,
+     bankAccountNo,
+     IFSCCode,
   });
 
   const createAssignSalaryStructure = await AssignSalaryStructure.findById(

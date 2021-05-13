@@ -21,6 +21,7 @@ const StopageSchema = require("../model/transport/vechileinventory/createStopage
 const ScheduleCollectionFee = require("../model/finance/feemangement/feecollectionSchedule");
 const QuarterPaymentSchema = require("../model/finance/feemangement/quarterpayment");
 const Respond = require("../utils/respond");
+const pincodeDirectory = require('india-pincode-lookup');
 
 const FeeRecipt = require("../model/finance/feemangement/feerecipt");
 
@@ -1363,6 +1364,16 @@ exports.AdmissionReport = async (req, res, next) => {
   }
 };
 
+exports.GetStateByPincode=CatchErr(async(req,res,next)=>{
+  const pincode=req.query.pincode
+  let data=await pincodeDirectory.lookup(pincode)
+
+      return res.json({
+        data:data,
+      })
+})
+
+
 const PDFDocument = require("pdfkit");
 const fs = require("fs");
 const path = require("path");
@@ -1920,9 +1931,9 @@ let admissionfee=await AdmissionFeeStructure.findOne({classFor})
    let total=schoolfee+admissionfee+transfee
 
    let data=new totalpayment({
-         total,application number
+         total,application nhhumber
    })
-  
+    
   
   
   */

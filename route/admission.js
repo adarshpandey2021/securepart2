@@ -56,6 +56,7 @@ const {
   GetActiveClassByLocation,
   DeleteNotification,
   PrintFeeRecipt,
+  GetStateByPincode
 } = require("../controller/admission");
 
 const { paymentCheck } = require("../middleware/payment");
@@ -85,7 +86,6 @@ router.patch("/statusapplicant/:id", ChangeApplicantStatus);
 router.get("/getapplicantdetails", showApplicantDetails);
 router.get("/getapplicantbyid/:id", GetDetailsOfApplicantById);
 router.delete("/deleteapplicantdetails/:id", DeleteApplicantDetails);
-
 //Policy
 router.post("/policy", Policy);
 router.get("/getpolicy", GetPolicy);
@@ -171,5 +171,10 @@ router.patch("/updatefaq/:id", EditFaqAnswer);
 router.get("/printregistration/:id", PrintAdmissionForm);
 
 router.get("/printfeereceipt/:id", PrintFeeRecipt);
+
+
+router.get("/getstatebypin",GetStateByPincode)
+ 
+
 
 module.exports = router;
