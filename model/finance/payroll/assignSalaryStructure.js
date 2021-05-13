@@ -91,6 +91,9 @@ const AssignSalaryStructureSchema = new mongoose.Schema(
     grossSalary: {
       type: Number
     },
+    monthlyGross:{
+      type: Number
+    },
     deleted: {
       type: Boolean,
       default: false
@@ -111,28 +114,38 @@ AssignSalaryStructureSchema.pre(
   }
 );
 
+
 AssignSalaryStructureSchema.post(
   /find(?:ById(?:AndUpdate)?|One(?:AndUpdate)?)|save/,
   async function(doc, next) {
     let grossSalary = 0;
+    let monthlyGross = 0;
     // const { employee } = doc;
     if (doc) {
       doc.grossSalary = 0;
+      doc.monthlyGross = 0;
       doc.salaryHeads.forEach(salary => {
         if (salary._id)
-          if (salary._id.type === 'Deduction')
+          if (salary._id.type === 'Deduction'){
             doc.grossSalary -= salary._id.amount;
-          else if (salary._id.type === 'Earning')
+          }
+          else if (salary._id.type === 'Earning'){
+            doc.monthlyGross += salary._id.amount
             doc.grossSalary += salary._id.amount;
+          }
       });
       // console.log(doc.grossSalary);
       // eslint-disable-next-line prefer-destructuring
       grossSalary = doc.grossSalary;
+      // eslint-disable-next-line prefer-destructuring
+      monthlyGross = doc.monthlyGross;
     }
     next();
     if (grossSalary > 0) {
       const employee = await Employee.findById(doc.employee);
       employee.grossSalary = grossSalary;
+      employee.monthlyGross = monthlyGross;
+      employee.isSalaryAssigned = true;
       await employee.save();
       // console.log(employee.grossSalary);
     }

@@ -12,6 +12,8 @@ const router = express.Router();
 
 // router.post('/', assignSalaryStructureController.createAssignSalaryStructure);
 
+router.get('/gross', assignSalaryStructureController.getAllAssignSalaryStructureAndGross);
+
 router
   .route('/')
   .get(assignSalaryStructureController.getAllAssignSalaryStructure)
