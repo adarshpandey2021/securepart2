@@ -45,18 +45,6 @@ const vendorInfoSchema = new mongoose.Schema({
   _id: String,
   vendorCategory: {
     type: String,
-    enum: {
-      values: [
-        'House Keeping',
-        'Stationary',
-        'Repair And Maintenance',
-        'Construction',
-        'Pharmaceutical',
-        'Transport'
-      ],
-      message:
-        'The Vendor Category should be House Keeping, Stationary, Repair And Maintenance, Construction, Pharmaceutical, Transport'
-    }
   },
   nameOfTheOrganization: {
     type: String
@@ -110,6 +98,18 @@ const vendorInfoSchema = new mongoose.Schema({
 //     next(err);
 //   }
 // });
+// enum: {
+//   values: [
+//     'House Keeping',
+//     'Stationary',
+//     'Repair And Maintenance',
+//     'Construction',
+//     'Pharmaceutical',
+//     'Transport'
+//   ],
+//   message:
+//     'The Vendor Category should be House Keeping, Stationary, Repair And Maintenance, Construction, Pharmaceutical, Transport'
+// }
 
 vendorInfoSchema.pre('save', counter('vendor', 5));
 vendorInfoSchema.pre(/^find/, function(next) {

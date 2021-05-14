@@ -10,6 +10,7 @@ router
   .post(vendorRegistrationController.createVendorRegistration);
 
   router.post("/addcategory",vendorRegistrationController.AddCategory)
+  router.get("/getaddcategory",vendorRegistrationController.GetAddCategory)
 
 router
   .route('/:id')
