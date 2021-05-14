@@ -1,4 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
+const APIFeatures = require('../../utils/apiFeatures');
+
 const AssignSalaryStructure = require('../../model/finance/payroll/assignSalaryStructure');
 const factory = require('../../controller/handlerFactory');
 const catchAsync = require('../../utils/catchAsync');
@@ -75,10 +77,17 @@ exports.updateAssignSalaryStructure = factory.updateOne(AssignSalaryStructure);
 
 exports.getAllAssignSalaryStructureAndGross = catchAsync(
   async (req, res, next) => {
-    const allEmployees = await Employee.find({ isSalaryAssigned: true }).populate({
+    const features = new APIFeatures(Employee.find({ isSalaryAssigned: true }).populate({
       path: 'roleId',
       select: 'role departmentName'
-    });
+    }), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+    // const doc = await features.query.explain();
+    const allEmployees = await features.query;
+
 
     if (!allEmployees)
       return nextError(next, 'No Employees has any assigned salary', 400);
@@ -96,11 +105,8 @@ exports.getAllAssignSalaryStructureAndGross = catchAsync(
 // exports.updateAssignSalaryStructure = catchAsync(async (req, res, next) => {
 //   const { id } = req.params;
 
-//   const assignSalaryStructure = await AssignSalaryStructure.findByIdAndUpdate(
-//     id,
-//     req.body,
-//     { new: true }
-//   );
+//   const assignSalaryStructure = await
+// AssignSalaryStructure.findByIdAndUpdate( id, req.body, { new: true } );
 
 //   if (!assignSalaryStructure) {
 //     return nextError(
@@ -180,11 +186,9 @@ exports.getAllAssignSalaryStructureAndGross = catchAsync(
 // exports.deleteAssignSalaryStructure = async (req, res, next) => {
 //   try {
 //     const id = req.params.id;
-//     const assignSalaryStructure = await AssignSalaryStructure.findByIdAndUpdate(
-//       id,
-//       { deleted: true },
-//       { new: true }
-//     );
+//     const assignSalaryStructure = await
+// AssignSalaryStructure.findByIdAndUpdate( id, { deleted: true }, { new: true
+// } );
 
 //     if (!assignSalaryStructure)
 //       throw new Error("No such salary head is present. Please check the id");
