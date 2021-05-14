@@ -75,7 +75,10 @@ exports.updateAssignSalaryStructure = factory.updateOne(AssignSalaryStructure);
 
 exports.getAllAssignSalaryStructureAndGross = catchAsync(
   async (req, res, next) => {
-    const allEmployees = await Employee.find({ isSalaryAssigned: true });
+    const allEmployees = await Employee.find({ isSalaryAssigned: true }).populate({
+      path: 'roleId',
+      select: 'role departmentName'
+    });
 
     if (!allEmployees)
       return nextError(next, 'No Employees has any assigned salary', 400);
